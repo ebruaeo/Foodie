@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pageBackground"
-    android:backgroundTint="@color/pageBackground"
-    tools:context=".fragments.HomePageFragment" >
+    android:background="#DCF4F2"
+    android:backgroundTint="#DCF4F2"
+    tools:context=".fragments.HomePageFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/homePagetoolbar"
@@ -26,14 +26,24 @@
 
     <ImageView
         android:id="@+id/imageViewAddAdress"
-        android:layout_width="44dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:src="@drawable/ic_home"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/pageBackground" />
+
+    <ImageView
+        android:id="@+id/imageViewFavorite"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:src="@drawable/white_favorite_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <SearchView
         android:id="@+id/searchView"
@@ -42,11 +52,13 @@
         android:layout_margin="8dp"
         android:iconifiedByDefault="false"
         android:queryBackground="@null"
+        android:elevation="4dp"
         android:queryHint="Canın ne çekiyor?"
         android:searchIcon="@drawable/icon_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homePagetoolbar">
+        app:layout_constraintTop_toBottomOf="@+id/homePagetoolbar"
+        >
 
     </SearchView>
 
@@ -58,22 +70,24 @@
         android:layout_marginBottom="34dp"
         android:clickable="true"
         android:src="@drawable/ic_shopping_cart"
-        app:tint="@null"
         app:backgroundTint="@color/green"
         app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
-
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@null" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/productRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        app:spanCount="2"
+        tools:listitem="@layout/designing_product" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

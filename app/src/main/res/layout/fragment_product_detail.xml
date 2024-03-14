@@ -8,11 +8,12 @@
     app:circularflow_radiusInDP="15dp"
     tools:context=".fragments.ProductDetailFragment">
 
+
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/productPicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:src="@drawable/ayran"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +21,8 @@
 
     <TextView
         android:id="@+id/productName"
-        android:layout_width="73dp"
-        android:layout_height="38dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:fontFamily="sans-serif-medium"
@@ -31,7 +32,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/productPicture" />
 
     <TextView
         android:id="@+id/productDescription"
@@ -55,18 +56,18 @@
         android:paddingHorizontal="4dp"
         android:paddingVertical="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toBottomOf="@+id/productPicture">
 
         <ImageButton
-            android:id="@+id/iconDecrement"
+            android:id="@+id/btnDecrement"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:background="transparent"
+            android:background="@null"
             android:src="@drawable/ic_decrement" />
 
         <TextView
-            android:id="@+id/productNumber"
+            android:id="@+id/productCount"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_weight="1"
@@ -76,11 +77,11 @@
             android:textSize="34sp" />
 
         <ImageButton
-            android:id="@+id/iconIncrement"
+            android:id="@+id/btnIncrement"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:background="transparent"
+            android:background="@null"
             android:src="@drawable/ic_increment" />
     </LinearLayout>
 
@@ -90,8 +91,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/bg_increment_decrement"
 
+        android:background="@drawable/bg_increment_decrement"
         android:orientation="horizontal"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -99,7 +100,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/totalPrice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -111,7 +112,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnSepeteEkle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -120,5 +121,27 @@
             android:textColor="@color/yazıRengi"
             android:textSize="16sp" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#FDFDFD"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnFav"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#FDFDFD"
+        android:src="@drawable/red_favorite_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
