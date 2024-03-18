@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#DCF4F2"
     android:backgroundTint="#DCF4F2"
-    tools:context=".fragments.HomePageFragment">
+    tools:context=".ui.fragments.HomePageFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/homePagetoolbar"
@@ -50,15 +50,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:elevation="4dp"
         android:iconifiedByDefault="false"
         android:queryBackground="@null"
-        android:elevation="4dp"
         android:queryHint="Canın ne çekiyor?"
         android:searchIcon="@drawable/icon_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homePagetoolbar"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/homePagetoolbar">
 
     </SearchView>
 
