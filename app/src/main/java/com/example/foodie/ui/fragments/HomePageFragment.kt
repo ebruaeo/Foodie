@@ -1,4 +1,4 @@
-package com.example.foodie.fragments
+package com.example.foodie.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -7,16 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
-import androidx.navigation.NavDirections
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
-import com.example.foodie.R
-import com.example.foodie.adapter.ProductAdapter
-import com.example.foodie.data.entity.Products
+import com.example.foodie.ui.adapter.ProductListAdapter
+import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.FragmentHomePageBinding
+import com.example.foodie.ui.viewmodel.HomePageViewModel
 
 
 class HomePageFragment : Fragment() {
     private lateinit var binding: FragmentHomePageBinding
+    private lateinit var viewModel:HomePageViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,12 +30,12 @@ class HomePageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val productList = listOf(
-            Products("",50,"Ayran","200ml"),
-            Products("",100,"Baklava","500gr"),
-            Products("",150,"Köfte","1 kilo")
+            Product(0,"",50,"Ayran","200ml"),
+            Product(1,"",100,"Baklava","500gr"),
+            Product(2,"",150,"Köfte","1 kilo")
         )
 
-        val productAdapter= ProductAdapter(productList)
+        val productAdapter= ProductListAdapter(productList)
         binding.productRecyclerView.adapter =productAdapter
 
 
@@ -42,6 +43,12 @@ class HomePageFragment : Fragment() {
             val action = HomePageFragmentDirections.actionHomePageFragmentToCartFragment()
             Navigation.findNavController(it).navigate(action)
         }
+
+        binding.imageViewFavorite.setOnClickListener {
+            val action = HomePageFragmentDirections.actionHomePageFragmentToFavoritesFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
 
         binding.searchView.setOnQueryTextListener(object: OnQueryTextListener{
             override fun onQueryTextChange(newText: String): Boolean {
@@ -56,11 +63,16 @@ class HomePageFragment : Fragment() {
         })
 
 
+
     }
 
 fun ara (aramaKelimesi:String){
     Log.e("Ürün ara", aramaKelimesi)
 }
 
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val tempViewModel: HomePageViewModel by viewModels()
+        viewModel=tempViewModel
+    }
 }

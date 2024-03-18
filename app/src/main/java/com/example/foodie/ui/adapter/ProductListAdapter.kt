@@ -1,30 +1,30 @@
-package com.example.foodie.adapter
+package com.example.foodie.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodie.data.entity.Products
+import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.DesigningProductBinding
-import com.example.foodie.fragments.HomePageFragmentDirections
+import com.example.foodie.ui.fragments.HomePageFragmentDirections
 
-class ProductAdapter(var productList: List<Products>) :
-    RecyclerView.Adapter<ProductAdapter.designingProductHolder>() {
+class ProductListAdapter(var productList: List<Product>) :
+    RecyclerView.Adapter<ProductListAdapter.DesigningProductHolder>() {
 
-    inner class designingProductHolder(var designing: DesigningProductBinding) :
+    inner class DesigningProductHolder(var designing: DesigningProductBinding) :
         RecyclerView.ViewHolder(designing.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): designingProductHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DesigningProductHolder {
         val binding =
             DesigningProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return designingProductHolder(binding)
+        return DesigningProductHolder(binding)
     }
 
     override fun getItemCount(): Int {
         return productList.size
     }
 
-    override fun onBindViewHolder(holder: designingProductHolder, position: Int) {
+    override fun onBindViewHolder(holder: DesigningProductHolder, position: Int) {
         val product = productList.get(position)
         val t = holder.designing
         t.productName.text = product.product_name
