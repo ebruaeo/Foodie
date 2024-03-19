@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.DesigningProductBinding
 import com.example.foodie.ui.fragments.HomePageFragmentDirections
+import com.example.foodie.utils.gecis
 
 class ProductListAdapter(var productList: List<Product>) :
     RecyclerView.Adapter<ProductListAdapter.DesigningProductHolder>() {
@@ -34,8 +35,9 @@ class ProductListAdapter(var productList: List<Product>) :
         t.productCardView.setOnClickListener {
             val gecis =
                 HomePageFragmentDirections.actionHomePageFragmentToProductDetailFragment(product = product)
-            Navigation.findNavController(it).navigate(gecis)
+            Navigation.gecis(it,gecis)
         }
+
     }
 
 }
