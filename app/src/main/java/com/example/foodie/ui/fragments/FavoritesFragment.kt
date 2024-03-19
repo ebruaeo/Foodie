@@ -11,7 +11,9 @@ import com.example.foodie.ui.adapter.FavListAdapter
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.FragmentFavoritesBinding
 import com.example.foodie.ui.viewmodel.FavoritesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavoritesFragment : Fragment() {
 
     private lateinit var binding: FragmentFavoritesBinding

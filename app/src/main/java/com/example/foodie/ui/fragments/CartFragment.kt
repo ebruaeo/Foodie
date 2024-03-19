@@ -12,8 +12,9 @@ import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.FragmentCartBinding
 import com.example.foodie.ui.adapter.CartListAdapter
 import com.example.foodie.ui.viewmodel.CartViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CartFragment : Fragment() {
 
     private lateinit var binding: FragmentCartBinding
@@ -34,7 +35,7 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val cartListAdapter = CartListAdapter(CartData.productList)
+        val cartListAdapter = CartListAdapter(CartData.productList, viewModel)
         binding.sepetRecyclerView.adapter = cartListAdapter
     }
 

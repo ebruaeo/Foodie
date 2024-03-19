@@ -9,12 +9,15 @@ import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import com.example.foodie.R
 import com.example.foodie.ui.adapter.ProductListAdapter
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.FragmentHomePageBinding
 import com.example.foodie.ui.viewmodel.HomePageViewModel
+import com.example.foodie.utils.gecis
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class HomePageFragment : Fragment() {
     private lateinit var binding: FragmentHomePageBinding
     private lateinit var viewModel:HomePageViewModel
@@ -29,35 +32,31 @@ class HomePageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val productList = listOf(
-            Product(0,"",50,"Ayran","200ml"),
-            Product(1,"",100,"Baklava","500gr"),
-            Product(2,"",150,"Köfte","1 kilo")
-        )
+        viewModel.productList.observe(viewLifecycleOwner){
 
-        val productAdapter= ProductListAdapter(productList)
-        binding.productRecyclerView.adapter =productAdapter
+            val productAdapter= ProductListAdapter(it)
+            binding.productRecyclerView.adapter =productAdapter
+        }
+
 
 
         binding.fabCart.setOnClickListener {
-            val action = HomePageFragmentDirections.actionHomePageFragmentToCartFragment()
-            Navigation.findNavController(it).navigate(action)
+          Navigation.gecis(it,R.id.action_homePageFragment_to_cartFragment)
         }
 
         binding.imageViewFavorite.setOnClickListener {
-            val action = HomePageFragmentDirections.actionHomePageFragmentToFavoritesFragment()
-            Navigation.findNavController(it).navigate(action)
+            Navigation.gecis(it,R.id.action_homePageFragment_to_favoritesFragment)
         }
 
 
         binding.searchView.setOnQueryTextListener(object: OnQueryTextListener{
             override fun onQueryTextChange(newText: String): Boolean {
-                ara(newText)
+                viewModel.ara(newText)
                 return true
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                ara(query)
+                viewModel.ara(query)
                 return true
             }
         })
@@ -66,13 +65,14 @@ class HomePageFragment : Fragment() {
 
     }
 
-fun ara (aramaKelimesi:String){
-    Log.e("Ürün ara", aramaKelimesi)
-}
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val tempViewModel: HomePageViewModel by viewModels()
         viewModel=tempViewModel
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.productYukle()
     }
 }

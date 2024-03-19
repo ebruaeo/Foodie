@@ -14,7 +14,9 @@ import com.example.foodie.databinding.FragmentProductDetailBinding
 import com.example.foodie.ui.viewmodel.FavoritesViewModel
 import com.example.foodie.ui.viewmodel.ProductDetailViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProductDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentProductDetailBinding
