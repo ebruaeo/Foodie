@@ -5,8 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.DesigningCartProductsBinding
+import com.example.foodie.ui.viewmodel.CartViewModel
+import com.example.foodie.ui.viewmodel.HomePageViewModel
+import com.google.android.material.snackbar.Snackbar
 
-class CartListAdapter(var cartProductList: List<Product>) :
+class CartListAdapter(var cartProductList: List<Product>,
+                      var viewModel: CartViewModel) :
     RecyclerView.Adapter<CartListAdapter.DesigningCartHolder>() {
 
     inner class DesigningCartHolder(var designing: DesigningCartProductsBinding) :
@@ -28,8 +32,15 @@ class CartListAdapter(var cartProductList: List<Product>) :
         t.cartProductCount.text =product.product_count.toString()
 
 
+        t.btnDelete.setOnClickListener {
+            Snackbar.make(it,"Ürün sepetten kaldırıldı.", Snackbar.LENGTH_SHORT)
+                .setAction(""){
+                    viewModel.sil(product.product_id)
+                }.show()
+        }
 
     }
+
 
 
 }
