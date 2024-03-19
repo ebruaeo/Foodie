@@ -32,6 +32,7 @@ class FavoritesFragment : Fragment() {
         binding.favRecyclerView.adapter = favProductAdapter
 
 
+
         binding.backButton.setOnClickListener {
             Navigation.findNavController(it).popBackStack()
         }
