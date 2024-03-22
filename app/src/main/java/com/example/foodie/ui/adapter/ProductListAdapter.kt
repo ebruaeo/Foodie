@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.example.foodie.R
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.DesigningProductBinding
 import com.example.foodie.ui.fragments.HomePageFragmentDirections
@@ -30,12 +31,23 @@ class ProductListAdapter(var productList: List<Product>) :
         val t = holder.designing
         t.productName.text = product.product_name
         t.productDescription.text = product.product_description
-        t.productPrice.text="${product.product_price}"
+        t.productPrice.text = "${product.product_price}"
+
+        t.favButton.setOnClickListener {
+            if (product.isFavorited) {
+                t.favButton.setImageResource(R.drawable.red_favorite_icon)
+                product.isFavorited = false
+            } else {
+                t.favButton.setImageResource(R.drawable.ic_fav_filled)
+                product.isFavorited = true
+
+            }
+        }
 
         t.productCardView.setOnClickListener {
             val gecis =
                 HomePageFragmentDirections.actionHomePageFragmentToProductDetailFragment(product = product)
-            Navigation.gecis(it,gecis)
+            Navigation.gecis(it, gecis)
         }
 
     }
