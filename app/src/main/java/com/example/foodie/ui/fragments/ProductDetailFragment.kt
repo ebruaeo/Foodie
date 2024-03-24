@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.foodie.data.CartData
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.FragmentProductDetailBinding
@@ -19,20 +20,27 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProductDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentProductDetailBinding
-    private lateinit var viewModel: ProductDetailViewModel
+    private val viewModel: ProductDetailViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProductDetailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val bundle: ProductDetailFragmentArgs by navArgs()
         val gelenProduct = bundle.product
 
         binding.productName.text = gelenProduct.product_name
         binding.totalPrice.text = gelenProduct.product_price.toString()
+        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${gelenProduct.product_pic}"
+        Glide.with(requireContext())
+            .load(url)
+            .into(binding.productPicture)
         setOnClickListeners(gelenProduct)
-
-        return binding.root
     }
 
     private fun setOnClickListeners(gelenProduct: Product) {
@@ -81,12 +89,6 @@ class ProductDetailFragment : Fragment() {
                     Navigation.findNavController(binding.btnSepeteEkle).navigate(action)
                 }.show()
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val tempViewModel: ProductDetailViewModel by viewModels()
-        viewModel = tempViewModel
     }
 
 }
