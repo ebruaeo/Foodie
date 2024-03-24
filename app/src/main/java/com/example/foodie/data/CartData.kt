@@ -40,5 +40,9 @@ object CartData {
         return false
     }
 
+    fun removeProduct(product: Product) {
+        productList.remove(product)
+    }
+
 
 }
