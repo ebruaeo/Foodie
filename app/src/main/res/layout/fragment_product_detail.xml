@@ -72,9 +72,9 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="1"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textColor="@color/pageBackground"
-            android:textSize="34sp" />
+            android:textSize="24sp" />
 
         <ImageButton
             android:id="@+id/btnIncrement"
@@ -104,7 +104,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center|end"
-            android:text="20"
+            tools:text="20"
             android:textColor="@color/pageBackground"
             android:textSize="24sp"
             android:textStyle="bold" />
