@@ -2,6 +2,7 @@ package com.example.foodie.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.foodie.data.entity.Product
 import com.example.foodie.data.repository.ProductsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,23 +13,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 
-class HomePageViewModel @Inject constructor (var productRepo: ProductsRepository) : ViewModel() {
+class HomePageViewModel @Inject constructor(var productRepo: ProductsRepository) : ViewModel() {
 
-    var productList =MutableLiveData<List<Product>>()
+    var productList = MutableLiveData<List<Product>>()
 
-    init {
-        productYukle()
-    }
 
     fun productYukle() {
+        viewModelScope.launch {
+            productList.value = productRepo.getAllProducts()
+        }
+
+    }
+
+    fun search(keyword: String) {
         CoroutineScope(Dispatchers.Main).launch {
             productList.value = productRepo.search(keyword)
         }
     }
 
-    fun ara(aramaKelimesi: String){
-        CoroutineScope(Dispatchers.Main).launch {
-            productList.value= productRepo.ara(aramaKelimesi)
-        }
-    }
 }

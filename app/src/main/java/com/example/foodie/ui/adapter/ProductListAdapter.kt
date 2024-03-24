@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.foodie.R
+import com.example.foodie.data.FavData
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.DesigningProductBinding
 import com.example.foodie.ui.fragments.HomePageFragmentDirections
@@ -30,17 +32,26 @@ class ProductListAdapter(var productList: List<Product>) :
         val product = productList.get(position)
         val t = holder.designing
         t.productName.text = product.product_name
-        t.productDescription.text = product.product_description
         t.productPrice.text = "${product.product_price}"
+        if (product.isFavorited) {
+            t.favButton.setImageResource(R.drawable.ic_fav_filled)
+
+        } else {
+            t.favButton.setImageResource(R.drawable.red_favorite_icon)
+        }
+
+        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${product.product_pic}"
+        Glide.with(t.productImage.context).load(url).override(500, 500).into(t.productImage)
 
         t.favButton.setOnClickListener {
             if (product.isFavorited) {
                 t.favButton.setImageResource(R.drawable.red_favorite_icon)
                 product.isFavorited = false
+                FavData.remove(product)
             } else {
                 t.favButton.setImageResource(R.drawable.ic_fav_filled)
                 product.isFavorited = true
-
+                FavData.save(product)
             }
         }
 

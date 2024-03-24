@@ -2,11 +2,12 @@ package com.example.foodie.data.datasource
 
 import android.util.Log
 import com.example.foodie.data.entity.Product
+import com.example.foodie.retrofit.ProductApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ProductsDataSource {
-    var list = listOf<Product>()
+class ProductsDataSource (var productApi: ProductApi){
+    private var list = listOf<Product>()
 
     suspend fun sil(product_id: Int) {
         Log.e("Ürün sil", product_id.toString())
@@ -15,15 +16,8 @@ class ProductsDataSource {
 
     suspend fun getAllProducts(): List<Product> =
         withContext(Dispatchers.IO) {
-
-            list = listOf(
-                Product(0, "", 50, "Ayran", "200ml"),
-                Product(1, "", 100, "Baklava", "500gr"),
-                Product(2, "", 150, "Köfte", "1 kilo")
-            )
-
+            list = productApi.getAllProducts().products
             return@withContext list
-
         }
 
 

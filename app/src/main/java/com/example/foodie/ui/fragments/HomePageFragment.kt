@@ -1,7 +1,6 @@
 package com.example.foodie.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.foodie.R
 import com.example.foodie.ui.adapter.ProductListAdapter
-import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.FragmentHomePageBinding
 import com.example.foodie.ui.viewmodel.HomePageViewModel
 import com.example.foodie.utils.gecis
@@ -20,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomePageFragment : Fragment() {
     private lateinit var binding: FragmentHomePageBinding
-    private lateinit var viewModel:HomePageViewModel
+    private lateinit var viewModel: HomePageViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,20 +30,20 @@ class HomePageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.productList.observe(viewLifecycleOwner){
-
-            val productAdapter= ProductListAdapter(it)
-            binding.productRecyclerView.adapter =productAdapter
+        viewModel.productList.observe(viewLifecycleOwner) {
+            val productAdapter = ProductListAdapter(it)
+            binding.productRecyclerView.adapter = productAdapter
         }
 
+        viewModel.productYukle()
 
 
         binding.fabCart.setOnClickListener {
-          Navigation.gecis(it,R.id.action_homePageFragment_to_cartFragment)
+            Navigation.gecis(it, R.id.action_homePageFragment_to_cartFragment)
         }
 
         binding.imageViewFavorite.setOnClickListener {
-            Navigation.gecis(it,R.id.action_homePageFragment_to_favoritesFragment)
+            Navigation.gecis(it, R.id.action_homePageFragment_to_favoritesFragment)
         }
 
 
@@ -62,7 +60,6 @@ class HomePageFragment : Fragment() {
         })
 
 
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,8 +68,4 @@ class HomePageFragment : Fragment() {
         viewModel = tempViewModel
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.productYukle()
-    }
 }
