@@ -38,13 +38,11 @@ class CartListAdapter(
 
 
         t.btnDelete.setOnClickListener {
-            CartData.removeProduct(product)
+            viewModel.removeProduct(product)
             this.notifyItemRemoved(position)
             Snackbar.make(it, "Ürün sepetten kaldırıldı.", Snackbar.LENGTH_SHORT)
                 .show()
         }
 
     }
-
-
 }

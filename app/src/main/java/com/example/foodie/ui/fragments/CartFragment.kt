@@ -26,20 +26,33 @@ class CartFragment : Fragment() {
         binding = FragmentCartBinding.inflate(inflater, container, false)
 
 
-        binding.backButton.setOnClickListener {
-            Navigation.findNavController(it).popBackStack()
-        }
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
         val cartListAdapter = CartListAdapter(CartData.getProductList(), viewModel)
         binding.sepetRecyclerView.adapter = cartListAdapter
+        setTotalPrice()
+
+        binding.backButton.setOnClickListener {
+            Navigation.findNavController(it).popBackStack()
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.productList.observe(viewLifecycleOwner) {
+            setTotalPrice()
+        }
+    }
+
+    private fun setTotalPrice() {
         var totalPrice = CartData.getTotalPrice()
         binding.subTotal.text = "$totalPrice₺"
         binding.cartTotalPrice.text = "$totalPrice₺"
     }
+
 
 }
