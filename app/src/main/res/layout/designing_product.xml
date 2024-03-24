@@ -71,18 +71,8 @@
                 app:layout_constraintBottom_toBottomOf="@id/productConstraint"
                 app:layout_constraintEnd_toEndOf="@id/productConstraint"
                 app:layout_constraintStart_toStartOf="@id/productConstraint"
-                app:layout_constraintTop_toBottomOf="@+id/productDescription" />
+                app:layout_constraintTop_toBottomOf="@id/productName"/>
 
-            <TextView
-                android:id="@+id/productDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="200 ml"
-                app:layout_constraintEnd_toEndOf="@id/productConstraint"
-                app:layout_constraintStart_toStartOf="@id/productConstraint"
-                app:layout_constraintTop_toBottomOf="@+id/productName" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

@@ -60,17 +60,6 @@
                 app:layout_constraintEnd_toEndOf="@id/productConstraint"
                 app:layout_constraintTop_toTopOf="@id/productConstraint" />
 
-            <TextView
-                android:id="@+id/productDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="200 ml"
-                tools:layout_editor_absoluteX="147dp"
-                tools:layout_editor_absoluteY="68dp"
-                app:layout_constraintStart_toEndOf="@id/productImage"
-                app:layout_constraintTop_toBottomOf="@id/productName"
-                android:layout_marginStart="8dp"/>
-
             <Button
                 android:id="@+id/btnSepeteEkle"
                 android:layout_width="201dp"
@@ -92,9 +81,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 app:layout_constraintStart_toEndOf="@+id/productImage"
-                app:layout_constraintTop_toBottomOf="@+id/productDescription"
+                app:layout_constraintTop_toBottomOf="@+id/productName"
                 app:srcCompat="@drawable/ic_kargo" />
 
             <TextView

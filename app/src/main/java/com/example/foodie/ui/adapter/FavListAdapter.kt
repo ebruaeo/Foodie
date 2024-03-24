@@ -31,7 +31,6 @@ class FavListAdapter(var favProductList: List<Product>) :
         val t = holder.designing
 
         t.productName.text = favProduct.product_name
-        t.productDescription.text = favProduct.product_description
         t.productPrice.text = "${favProduct.product_price}"
 
         t.favProductCardView.setOnClickListener {
