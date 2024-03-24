@@ -21,6 +21,7 @@ class ProductDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentProductDetailBinding
     private val viewModel: ProductDetailViewModel by viewModels()
+    private var snackbar: Snackbar? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +53,7 @@ class ProductDetailFragment : Fragment() {
 
     private fun setBackOnClickListener() {
         binding.btnBack.setOnClickListener {
+            snackbar?.dismiss()
             Navigation.findNavController(it).popBackStack()
         }
     }
@@ -82,12 +84,13 @@ class ProductDetailFragment : Fragment() {
             val p = gelenProduct.copy()
             p.product_count = binding.productCount.text.toString().toInt()
             CartData.addProduct(p)
-            Snackbar.make(it, "Ürün sepete eklendi.", Snackbar.LENGTH_SHORT)
+            snackbar = Snackbar.make(it, "Ürün sepete eklendi.", Snackbar.LENGTH_SHORT)
                 .setAction("Sepete git") {
                     val action =
                         ProductDetailFragmentDirections.actionProductDetailFragmentToCartFragment()
                     Navigation.findNavController(binding.btnSepeteEkle).navigate(action)
-                }.show()
+                }
+            snackbar?.show()
         }
     }
 
