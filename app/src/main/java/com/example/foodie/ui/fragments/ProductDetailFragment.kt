@@ -73,8 +73,7 @@ class ProductDetailFragment : Fragment() {
         binding.btnSepeteEkle.setOnClickListener {
             val p = gelenProduct.copy()
             p.product_count = binding.productCount.text.toString().toInt()
-            CartData.productList.add(p)
-// TODO sepette aynı ürün varsa adeti arttır
+            CartData.addProduct(p)
             Snackbar.make(it, "Ürün sepete eklendi.", Snackbar.LENGTH_SHORT)
                 .setAction("Sepete git") {
                     val action =
