@@ -33,18 +33,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:text="Ayran"
                 android:textColor="@color/yazıRengi"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/cartProductPic"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Ayran" />
 
             <TextView
                 android:id="@+id/textCartProductCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="4dp"
                 android:text="Ürün Adeti:"
                 android:textColor="@color/yazıRengi"
                 app:layout_constraintStart_toEndOf="@+id/cartProductPic"
@@ -55,11 +55,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="57dp"
-                android:text="2"
                 android:textColor="@color/yazıRengi"
+                app:layout_constraintBottom_toBottomOf="@id/textCartProductCount"
                 app:layout_constraintStart_toEndOf="@+id/textCartProductCount"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/textCartProductCount"
+                tools:text="2" />
+
+            <TextView
+                android:id="@+id/textTotalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Toplam: "
+                app:layout_constraintStart_toStartOf="@id/textCartProductCount"
+                app:layout_constraintTop_toBottomOf="@id/textCartProductCount" />
+
+            <TextView
+                android:id="@+id/totalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/textTotalPrice"
+                app:layout_constraintStart_toEndOf="@id/textTotalPrice"
+                app:layout_constraintTop_toTopOf="@id/textTotalPrice"
+                tools:text="20" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₺"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/totalPrice"
+                app:layout_constraintStart_toEndOf="@id/totalPrice"
+                app:layout_constraintTop_toTopOf="@id/totalPrice" />
+
 
             <ImageButton
                 android:id="@+id/btnDelete"
