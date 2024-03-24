@@ -22,7 +22,7 @@ class HomePageViewModel @Inject constructor (var productRepo: ProductsRepository
 
     fun productYukle() {
         CoroutineScope(Dispatchers.Main).launch {
-           productList.value= productRepo.productYukle()
+            productList.value = productRepo.search(keyword)
         }
     }
 

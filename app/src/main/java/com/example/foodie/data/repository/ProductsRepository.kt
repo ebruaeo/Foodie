@@ -7,7 +7,8 @@ class ProductsRepository(var productDS:ProductsDataSource) {
 
     suspend fun sil(product_id: Int) = productDS.sil(product_id)
 
-    suspend fun productYukle(): List<Product> = productDS.productYukle()
+    suspend fun getAllProducts(): List<Product> = productDS.getAllProducts()
 
-    suspend fun ara(aramaKelimesi: String): List<Product> = productDS.ara(aramaKelimesi)
+    suspend fun search(keyword: String): List<Product> = productDS.search(keyword)
+
 }

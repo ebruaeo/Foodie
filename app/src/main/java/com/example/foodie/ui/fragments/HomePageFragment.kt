@@ -49,14 +49,14 @@ class HomePageFragment : Fragment() {
         }
 
 
-        binding.searchView.setOnQueryTextListener(object: OnQueryTextListener{
+        binding.searchView.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
-                viewModel.ara(newText)
+                viewModel.search(newText)
                 return true
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                viewModel.ara(query)
+                viewModel.search(query)
                 return true
             }
         })
@@ -68,7 +68,7 @@ class HomePageFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val tempViewModel: HomePageViewModel by viewModels()
-        viewModel=tempViewModel
+        viewModel = tempViewModel
     }
 
     override fun onResume() {

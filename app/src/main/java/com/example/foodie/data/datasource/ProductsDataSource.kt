@@ -13,7 +13,7 @@ class ProductsDataSource {
     }
 
 
-    suspend fun productYukle(): List<Product> =
+    suspend fun getAllProducts(): List<Product> =
         withContext(Dispatchers.IO) {
 
             list = listOf(
@@ -27,11 +27,11 @@ class ProductsDataSource {
         }
 
 
-    suspend fun ara(aramaKelimesi: String): ArrayList<Product> =
+    suspend fun search(keyword: String): ArrayList<Product> =
         withContext(Dispatchers.IO) {
             var filteredList = arrayListOf<Product>()
             for (i in 0..list.size - 1) {
-                if (list[i].product_name.contains(aramaKelimesi, true)) {
+                if (list[i].product_name.contains(keyword, true)) {
                     filteredList.add(list[i])
 
                 }
