@@ -32,9 +32,11 @@ class HomePageFragment : Fragment() {
 
         viewModel.productList.observe(viewLifecycleOwner) {
             val productAdapter = ProductListAdapter(it)
+            binding.progressBar.visibility = View.GONE
             binding.productRecyclerView.adapter = productAdapter
         }
 
+        binding.progressBar.visibility = View.VISIBLE
         viewModel.productYukle()
 
 
