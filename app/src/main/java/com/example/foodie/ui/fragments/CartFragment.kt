@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CartFragment : Fragment() {
 
     private lateinit var binding: FragmentCartBinding
-    private lateinit var viewModel: CartViewModel
+    private val viewModel: CartViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,14 +35,11 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val cartListAdapter = CartListAdapter(CartData.productList, viewModel)
+        val cartListAdapter = CartListAdapter(CartData.getProductList(), viewModel)
         binding.sepetRecyclerView.adapter = cartListAdapter
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val tempViewModel: CartViewModel by viewModels()
-        viewModel = tempViewModel
+        var totalPrice = CartData.getTotalPrice()
+        binding.subTotal.text = "$totalPrice₺"
+        binding.cartTotalPrice.text = "$totalPrice₺"
     }
 
 }
