@@ -26,10 +26,11 @@ class CartListAdapter(var cartProductList: List<Product>,
     }
 
     override fun onBindViewHolder(holder: DesigningCartHolder, position: Int) {
-       val product = cartProductList.get(position)
+       val product = cartProductList[position]
         val t = holder.designing
         t.cartProductName.text = product.product_name
         t.cartProductCount.text =product.product_count.toString()
+        t.totalPrice.text = "${product.product_count * product.product_price}₺"
 
 
         t.btnDelete.setOnClickListener {
