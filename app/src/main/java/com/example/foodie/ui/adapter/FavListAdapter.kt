@@ -4,13 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.example.foodie.R
 import com.example.foodie.data.CartData
+import com.example.foodie.data.FavData
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.DesigningFavProductBinding
 import com.example.foodie.ui.fragments.FavoritesFragmentDirections
+import com.example.foodie.ui.viewmodel.FavoritesViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class FavListAdapter(var favProductList: List<Product>) :
+class FavListAdapter(
+    private val favProductList: List<Product>,
+    private val viewModel: FavoritesViewModel
+) :
     RecyclerView.Adapter<FavListAdapter.DesigningFavHolder>() {
 
     inner class DesigningFavHolder(var designing: DesigningFavProductBinding) :
@@ -38,13 +44,23 @@ class FavListAdapter(var favProductList: List<Product>) :
                 FavoritesFragmentDirections.actionFavoritesFragmentToProductDetailFragment(product = favProduct)
             Navigation.findNavController(it).navigate(action)
         }
+
         t.btnSepeteEkle.setOnClickListener {
-            val p = favProduct.copy()
-            p.product_count = 1
-            CartData.productList.add(p)
+            viewModel.addToCart(favProduct)
             Snackbar.make(it, "Ürün sepete eklendi.", Snackbar.LENGTH_SHORT).show()
         }
 
+        t.favButton.setOnClickListener {
+            if (favProduct.isFavorited) {
+                t.favButton.setImageResource(R.drawable.red_favorite_icon)
+                favProduct.isFavorited = false
+                FavData.remove(favProduct, it.context)
+            } else {
+                t.favButton.setImageResource(R.drawable.ic_fav_filled)
+                favProduct.isFavorited = true
+                FavData.save(favProduct, it.context)
+            }
+        }
 
     }
 
