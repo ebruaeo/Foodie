@@ -40,10 +40,15 @@ class CartFragment : Fragment() {
         binding.backButton.setOnClickListener {
             Navigation.findNavController(it).popBackStack()
         }
+
+        binding.btnEmptyCart.setOnClickListener {
+            viewModel.emptyCart()
+        }
     }
 
     private fun observeViewModel() {
         viewModel.productList.observe(viewLifecycleOwner) {
+            binding.sepetRecyclerView.adapter?.notifyDataSetChanged()
             setTotalPrice()
         }
     }
