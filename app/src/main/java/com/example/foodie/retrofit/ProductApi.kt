@@ -15,7 +15,7 @@ interface ProductApi {
     suspend fun getAllProducts(): AllProductsResponse
 
     @GET("yemekler/sepettekiYemekleriGetir.php")
-    suspend fun getCartProducts(): CartProductsResponse
+    suspend fun fetchCartProducts(): CartProductsResponse
 
     @POST("yemekler/sepettenYemekSil.php")
     @FormUrlEncoded
