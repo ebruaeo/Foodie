@@ -24,13 +24,18 @@ object CartData {
         if (isProductAlreadyAdded(product.productName)) {
             val addedProduct = getProduct(product.productName)!!
             addedProduct.productCount = count
+            CoroutineScope(Dispatchers.IO).launch {
+                removeProduct(addedProduct, repository)
+
+                repository.addProductToCart(addedProduct)
+                fetchCartProducts(repository)
+            }
         } else {
             CoroutineScope(Dispatchers.IO).launch {
                 repository.addProductToCart(product.toCartProduct(count))
                 fetchCartProducts(repository)
             }
         }
-        updateCart(repository)
     }
 
     fun getProductList() = productList as List<CartProduct>
