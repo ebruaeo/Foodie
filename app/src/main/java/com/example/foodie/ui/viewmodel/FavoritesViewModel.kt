@@ -12,9 +12,25 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoritesViewModel @Inject constructor(private var productRepo: ProductsRepository) : ViewModel() {
+class FavoritesViewModel @Inject constructor(private var productRepo: ProductsRepository) :
+    ViewModel() {
     var productList = MutableLiveData<List<Product>>()
     var favoriteProductIds = setOf<String>()
+        set(value) {
+            field = value
+            updateProductListFavs()
+        }
+
+    private fun updateProductListFavs() {
+        productList.value?.let {
+            for (p in it) {
+                if (favoriteProductIds.contains(p.productId.toString())) {
+                    p.isFavorited = true
+                }
+            }
+        }
+
+    }
 
     fun fetchAllProducts() {
         CoroutineScope(Dispatchers.Main).launch {

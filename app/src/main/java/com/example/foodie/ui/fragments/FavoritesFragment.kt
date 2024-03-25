@@ -32,7 +32,6 @@ class FavoritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         viewModel.fetchAllProducts()
-        viewModel.favoriteProductIds = FavData.getAll(requireContext())?.keys ?: setOf()
 
         binding.backButton.setOnClickListener {
             Navigation.findNavController(it).popBackStack()
@@ -48,10 +47,10 @@ class FavoritesFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.productList.observe(viewLifecycleOwner) { productList ->
+            viewModel.favoriteProductIds = FavData.getAll(requireContext())?.keys ?: setOf()
             val adapterData = mutableListOf<Product>()
-            val favDataIds = FavData.getAll(requireContext())?.keys
             for (p in productList) {
-                if (favDataIds?.contains(p.productId.toString()) == true) {
+                if (p.isFavorited) {
                     adapterData.add(p)
                 }
             }
