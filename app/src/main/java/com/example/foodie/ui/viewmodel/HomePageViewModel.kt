@@ -17,6 +17,22 @@ class HomePageViewModel @Inject constructor(var productRepo: ProductsRepository)
 
     var productList = MutableLiveData<List<Product>>()
 
+    var favoriteProductIds = setOf<String>()
+        set(value) {
+            field = value
+            updateProductListFavs()
+        }
+
+    private fun updateProductListFavs() {
+        productList.value?.let {
+            for (p in it) {
+                if (favoriteProductIds.contains(p.productId.toString())) {
+                    p.isFavorited = true
+                }
+            }
+        }
+
+    }
 
     fun productYukle() {
         viewModelScope.launch {

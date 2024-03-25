@@ -9,6 +9,7 @@ import android.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.foodie.R
+import com.example.foodie.data.FavData
 import com.example.foodie.ui.adapter.ProductListAdapter
 import com.example.foodie.databinding.FragmentHomePageBinding
 import com.example.foodie.ui.viewmodel.HomePageViewModel
@@ -31,6 +32,7 @@ class HomePageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.productList.observe(viewLifecycleOwner) {
+            viewModel.favoriteProductIds = FavData.getAll(requireContext())?.keys ?: setOf()
             val productAdapter = ProductListAdapter(it)
             binding.progressBar.visibility = View.GONE
             binding.productRecyclerView.adapter = productAdapter
