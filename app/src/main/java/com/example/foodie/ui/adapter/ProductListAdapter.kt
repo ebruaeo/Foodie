@@ -9,6 +9,7 @@ import com.example.foodie.R
 import com.example.foodie.data.FavData
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.DesigningProductBinding
+import com.example.foodie.retrofit.ApiUtils
 import com.example.foodie.ui.fragments.HomePageFragmentDirections
 import com.example.foodie.utils.gecis
 
@@ -31,8 +32,8 @@ class ProductListAdapter(var productList: List<Product>) :
     override fun onBindViewHolder(holder: DesigningProductHolder, position: Int) {
         val product = productList[position]
         val t = holder.designing
-        t.productName.text = product.product_name
-        t.productPrice.text = "${product.product_price}₺"
+        t.productName.text = product.productName
+        t.productPrice.text = "${product.productPrice}₺"
         if (product.isFavorited) {
             t.favButton.setImageResource(R.drawable.ic_fav_filled)
 
@@ -40,7 +41,7 @@ class ProductListAdapter(var productList: List<Product>) :
             t.favButton.setImageResource(R.drawable.red_favorite_icon)
         }
 
-        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${product.product_pic}"
+        val url = ApiUtils.constructImgUrl(product.productImgName)
         Glide.with(t.productImage.context).load(url).override(500, 500).into(t.productImage)
 
         t.favButton.setOnClickListener {

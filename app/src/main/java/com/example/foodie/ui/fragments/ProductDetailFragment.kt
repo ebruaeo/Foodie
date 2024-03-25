@@ -10,8 +10,10 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.foodie.data.CartData
+import com.example.foodie.data.entity.CartProduct
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.FragmentProductDetailBinding
+import com.example.foodie.retrofit.ApiUtils
 import com.example.foodie.ui.viewmodel.ProductDetailViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,19 +37,19 @@ class ProductDetailFragment : Fragment() {
         val bundle: ProductDetailFragmentArgs by navArgs()
         val gelenProduct = bundle.product
 
-        binding.productName.text = gelenProduct.product_name
-        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${gelenProduct.product_pic}"
+        binding.productName.text = gelenProduct.productName
+        val url = ApiUtils.constructImgUrl(gelenProduct.productImgName)
         Glide.with(requireContext())
             .load(url)
             .into(binding.productPicture)
 
-        if (CartData.isProductAlreadyAdded(gelenProduct)) {
-            val addedProduct = CartData.getProduct(gelenProduct.product_id)!!
+        if (CartData.isProductAlreadyAdded(gelenProduct.productId)) {
+            val addedProduct = CartData.getProduct(gelenProduct.productId)!!
             binding.totalPrice.text = getTotalPriceOf(addedProduct).toString()
-            binding.productCount.text = addedProduct.product_count.toString()
+            binding.productCount.text = addedProduct.productCount.toString()
             binding.btnSepeteEkle.text = "Sepeti güncelle"
         } else {
-            binding.totalPrice.text = gelenProduct.product_price.toString()
+            binding.totalPrice.text = gelenProduct.productPrice.toString()
 
         }
 
@@ -76,7 +78,7 @@ class ProductDetailFragment : Fragment() {
         binding.btnIncrement.setOnClickListener {
             val productCount = binding.productCount.text.toString().toInt() + 1
             binding.productCount.text = productCount.toString()
-            binding.totalPrice.text = "${productCount * gelenProduct.product_price}"
+            binding.totalPrice.text = "${productCount * gelenProduct.productPrice}"
 
         }
     }
@@ -88,7 +90,7 @@ class ProductDetailFragment : Fragment() {
             } else {
                 val productCount = binding.productCount.text.toString().toInt() - 1
                 binding.productCount.text = productCount.toString()
-                binding.totalPrice.text = "${productCount * gelenProduct.product_price}"
+                binding.totalPrice.text = "${productCount * gelenProduct.productPrice}"
             }
         }
     }

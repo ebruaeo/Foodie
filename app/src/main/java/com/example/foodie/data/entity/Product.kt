@@ -1,21 +1,23 @@
 package com.example.foodie.data.entity
 
+import com.example.foodie.retrofit.ApiUtils
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Product(
     @SerializedName("yemek_id")
-    var product_id: Int,
+    var productId: Int,
 
     @SerializedName("yemek_resim_adi")
-    var product_pic: String,
+    var productImgName: String,
 
     @SerializedName("yemek_fiyat")
-    var product_price: Int,
+    var productPrice: Int,
 
     @SerializedName("yemek_adi")
-    var product_name: String,
+    var productName: String,
 
-    var product_count: Int = 0,
     var isFavorited: Boolean = false
-) : Serializable
+) : Serializable {
+    fun toCartProduct(count: Int = 0) = CartProduct(productId, productName, productImgName, productPrice, count, ApiUtils.USERNAME)
+}

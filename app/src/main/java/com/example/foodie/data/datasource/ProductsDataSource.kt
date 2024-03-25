@@ -25,7 +25,7 @@ class ProductsDataSource (var productApi: ProductApi){
         withContext(Dispatchers.IO) {
             var filteredList = arrayListOf<Product>()
             for (i in 0..list.size - 1) {
-                if (list[i].product_name.contains(keyword, true)) {
+                if (list[i].productName.contains(keyword, true)) {
                     filteredList.add(list[i])
 
                 }
