@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.example.foodie.R
 import com.example.foodie.data.CartData
+import com.example.foodie.data.FavData
 import com.example.foodie.data.entity.CartProduct
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.FragmentProductDetailBinding
@@ -38,11 +40,13 @@ class ProductDetailFragment : Fragment() {
         val gelenProduct = bundle.product
 
         binding.productName.text = gelenProduct.productName
-        val url = ApiUtils.constructImgUrl(gelenProduct.productImgName)
-        Glide.with(requireContext())
-            .load(url)
-            .into(binding.productPicture)
+        setFavBtnBackground(gelenProduct)
+        setProductImage(gelenProduct)
+        prepareScreen(gelenProduct)
+        setOnClickListeners(gelenProduct)
+    }
 
+    private fun prepareScreen(gelenProduct: Product) {
         if (CartData.isProductAlreadyAdded(gelenProduct.productName)) {
             val addedProduct = CartData.getProduct(gelenProduct.productName)!!
             binding.totalPrice.text = getTotalPriceOf(addedProduct).toString()
@@ -50,10 +54,36 @@ class ProductDetailFragment : Fragment() {
             binding.btnSepeteEkle.text = "Sepeti güncelle"
         } else {
             binding.totalPrice.text = gelenProduct.productPrice.toString()
-
         }
+    }
 
-        setOnClickListeners(gelenProduct)
+    private fun setProductImage(gelenProduct: Product) {
+        val url = ApiUtils.constructImgUrl(gelenProduct.productImgName)
+        Glide.with(requireContext())
+            .load(url)
+            .into(binding.productPicture)
+    }
+
+    private fun setFavBtnOnClickListener(gelenProduct: Product) {
+        binding.btnFav.setOnClickListener {
+            if (gelenProduct.isFavorited) {
+                binding.btnFav.setImageResource(R.drawable.red_favorite_icon)
+                gelenProduct.isFavorited = false
+                FavData.remove(gelenProduct, requireContext())
+            } else {
+                binding.btnFav.setImageResource(R.drawable.ic_fav_filled)
+                gelenProduct.isFavorited = true
+                FavData.save(gelenProduct, requireContext())
+            }
+        }
+    }
+
+    private fun setFavBtnBackground(gelenProduct: Product) {
+        if (gelenProduct.isFavorited) {
+            binding.btnFav.setImageResource(R.drawable.ic_fav_filled)
+        } else {
+            binding.btnFav.setImageResource(R.drawable.red_favorite_icon)
+        }
     }
 
     private fun getTotalPriceOf(product: CartProduct): Int {
@@ -62,6 +92,7 @@ class ProductDetailFragment : Fragment() {
 
     private fun setOnClickListeners(gelenProduct: Product) {
         setSepeteEkleOnClickListener(gelenProduct)
+        setFavBtnOnClickListener(gelenProduct)
         setDecrementOnClickListener(gelenProduct)
         setIncrementOnClickListener(gelenProduct)
         setBackOnClickListener()
