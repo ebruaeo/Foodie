@@ -1,48 +1,52 @@
 package com.example.foodie.data
 
+import com.example.foodie.data.entity.CartProduct
 import com.example.foodie.data.entity.Product
 
 object CartData {
-    private val productList = mutableListOf<Product>()
+    private val productList = mutableListOf<CartProduct>()
 
     fun getTotalPrice(): Int {
         var totalPrice = 0
         for (p in productList) {
-            totalPrice += p.product_price * p.product_count
+            totalPrice += p.productPrice * p.productCount
         }
         return totalPrice
     }
 
 
-
-    fun addProduct(product: Product) {
-        if (isProductAlreadyAdded(product)) {
-            val addedProduct = getProduct(product.product_id)!!
-            addedProduct.product_count = product.product_count
+    fun addProduct(product: Product, count: Int) {
+        if (isProductAlreadyAdded(product.productId)) {
+            val addedProduct = getProduct(product.productId)!!
+            addedProduct.productCount = count
         } else {
-            productList.add(product)
+            productList.add(product.toCartProduct(count))
         }
     }
 
-    fun getProductList() = productList as List<Product>
+//    fun addProduct(cartProduct: CartProduct) {
+//
+//    }
 
-    fun getProduct(productId: Int): Product? {
+    fun getProductList() = productList as List<CartProduct>
+
+    fun getProduct(productId: Int): CartProduct? {
         for (p in productList) {
-            if (p.product_id == productId)
+            if (p.productId == productId)
                 return p
         }
         return null
     }
 
-    fun isProductAlreadyAdded(product: Product): Boolean {
+    fun isProductAlreadyAdded(productId: Int): Boolean {
         for (p in productList) {
-            if (p.product_id == product.product_id)
+            if (p.productId == productId)
                 return true
         }
         return false
     }
 
-    fun removeProduct(product: Product) {
+    fun removeProduct(product: CartProduct) {
         productList.remove(product)
     }
 

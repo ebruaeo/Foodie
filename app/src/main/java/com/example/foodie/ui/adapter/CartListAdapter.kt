@@ -3,15 +3,14 @@ package com.example.foodie.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodie.data.CartData
+import com.example.foodie.data.entity.CartProduct
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.DesigningCartProductsBinding
 import com.example.foodie.ui.viewmodel.CartViewModel
-import com.example.foodie.ui.viewmodel.HomePageViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class CartListAdapter(
-    var cartProductList: List<Product>,
+    var cartProductList: List<CartProduct>,
     var viewModel: CartViewModel
 ) :
     RecyclerView.Adapter<CartListAdapter.DesigningCartHolder>() {
@@ -32,9 +31,9 @@ class CartListAdapter(
     override fun onBindViewHolder(holder: DesigningCartHolder, position: Int) {
         val product = cartProductList[position]
         val t = holder.designing
-        t.cartProductName.text = product.product_name
-        t.cartProductCount.text = product.product_count.toString()
-        t.totalPrice.text = "${product.product_count * product.product_price}₺"
+        t.cartProductName.text = product.productName
+        t.cartProductCount.text = product.productCount.toString()
+        t.totalPrice.text = "${product.productCount * product.productPrice}₺"
 
 
         t.btnDelete.setOnClickListener {

@@ -54,8 +54,8 @@ class ProductDetailFragment : Fragment() {
         setOnClickListeners(gelenProduct)
     }
 
-    private fun getTotalPriceOf(product: Product): Int {
-        return product.product_price * product.product_count
+    private fun getTotalPriceOf(product: CartProduct): Int {
+        return product.productPrice * product.productCount
     }
 
     private fun setOnClickListeners(gelenProduct: Product) {
@@ -95,9 +95,8 @@ class ProductDetailFragment : Fragment() {
 
     private fun setSepeteEkleOnClickListener(gelenProduct: Product) {
         binding.btnSepeteEkle.setOnClickListener {
-            val p = gelenProduct.copy()
-            p.product_count = binding.productCount.text.toString().toInt()
-            CartData.addProduct(p)
+            val productCount = binding.productCount.text.toString().toInt()
+            CartData.addProduct(gelenProduct, productCount)
             snackbar = Snackbar.make(it, "Ürün sepete eklendi.", Snackbar.LENGTH_SHORT)
                 .setAction("Sepete git") {
                     val action =
