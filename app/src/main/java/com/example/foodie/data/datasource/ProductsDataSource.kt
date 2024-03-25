@@ -1,18 +1,17 @@
 package com.example.foodie.data.datasource
 
 import android.util.Log
+import com.example.foodie.data.CartData
 import com.example.foodie.data.entity.CartProduct
 import com.example.foodie.data.entity.Product
+import com.example.foodie.retrofit.ApiUtils
 import com.example.foodie.retrofit.ProductApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.http.Field
 
 class ProductsDataSource(var productApi: ProductApi) {
     private var list = listOf<Product>()
-
-    suspend fun sil(product_id: Int) {
-        Log.e("Ürün sil", product_id.toString())
-    }
 
 
     suspend fun getAllProducts(): List<Product> =
@@ -36,7 +35,25 @@ class ProductsDataSource(var productApi: ProductApi) {
 
         }
 
-    suspend fun fetchCartProducts() = withContext(Dispatchers.IO) {
-        return@withContext productApi.fetchCartProducts().products
-    }
+    suspend fun fetchCartProducts(username: String = ApiUtils.USERNAME) =
+        withContext(Dispatchers.IO) {
+            return@withContext try {
+                productApi.fetchCartProducts(username).products
+            } catch (e: Exception) {
+                listOf<CartProduct>()
+            }
+        }
+
+    suspend fun removeProductFromCart(
+        productId: Int,
+        username: String = ApiUtils.USERNAME
+    ) = productApi.removeProductFromCart(productId, username)
+
+    suspend fun addProductToCart(cartProduct: CartProduct) = productApi.addProductToCart(
+        cartProduct.productName,
+        cartProduct.productImgName,
+        cartProduct.productPrice,
+        cartProduct.productCount,
+        cartProduct.username
+    )
 }
