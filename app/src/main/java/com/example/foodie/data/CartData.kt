@@ -62,8 +62,10 @@ object CartData {
     }
 
     suspend fun emptyCart(repository: ProductsRepository) {
-            removeAllCartProducts(repository)
-            productList.clear()
+        for (p in productList) {
+            repository.removeProductFromCart(p.productId)
+        }
+        productList.clear()
     }
 
 }
