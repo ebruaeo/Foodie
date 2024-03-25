@@ -43,7 +43,7 @@ class ProductDetailFragment : Fragment() {
             .load(url)
             .into(binding.productPicture)
 
-        if (CartData.isProductAlreadyAdded(gelenProduct.productId)) {
+        if (CartData.isProductAlreadyAdded(gelenProduct.productName)) {
             val addedProduct = CartData.getProduct(gelenProduct.productId)!!
             binding.totalPrice.text = getTotalPriceOf(addedProduct).toString()
             binding.productCount.text = addedProduct.productCount.toString()

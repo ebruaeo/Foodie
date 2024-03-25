@@ -40,9 +40,9 @@ object CartData {
         return null
     }
 
-    fun isProductAlreadyAdded(productId: Int): Boolean {
+    fun isProductAlreadyAdded(productName: String): Boolean {
         for (p in productList) {
-            if (p.productId == productId)
+            if (p.productName == productName)
                 return true
         }
         return false
