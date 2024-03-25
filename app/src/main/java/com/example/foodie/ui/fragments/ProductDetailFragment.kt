@@ -98,7 +98,7 @@ class ProductDetailFragment : Fragment() {
     private fun setSepeteEkleOnClickListener(gelenProduct: Product) {
         binding.btnSepeteEkle.setOnClickListener {
             val productCount = binding.productCount.text.toString().toInt()
-            CartData.addProduct(gelenProduct, productCount)
+            viewModel.addToCart(gelenProduct, productCount)
             snackbar = Snackbar.make(it, "Ürün sepete eklendi.", Snackbar.LENGTH_SHORT)
                 .setAction("Sepete git") {
                     val action =
