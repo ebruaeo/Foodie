@@ -1,12 +1,13 @@
 package com.example.foodie.data.datasource
 
 import android.util.Log
+import com.example.foodie.data.entity.CartProduct
 import com.example.foodie.data.entity.Product
 import com.example.foodie.retrofit.ProductApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ProductsDataSource (var productApi: ProductApi){
+class ProductsDataSource(var productApi: ProductApi) {
     private var list = listOf<Product>()
 
     suspend fun sil(product_id: Int) {
@@ -34,4 +35,8 @@ class ProductsDataSource (var productApi: ProductApi){
             return@withContext filteredList
 
         }
+
+    suspend fun fetchCartProducts() = withContext(Dispatchers.IO) {
+        return@withContext productApi.fetchCartProducts().products
+    }
 }
