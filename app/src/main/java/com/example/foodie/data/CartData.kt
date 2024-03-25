@@ -61,25 +61,6 @@ object CartData {
         }
     }
 
-    private fun updateCart(repository: ProductsRepository) {
-        CoroutineScope(Dispatchers.IO).launch {
-            removeAllCartProducts(repository)
-            addAllCartProducts(repository)
-        }
-    }
-
-    private suspend fun removeAllCartProducts(repository: ProductsRepository) {
-        for (p in productList) {
-            repository.removeProductFromCart(p.productId)
-        }
-    }
-
-    private suspend fun addAllCartProducts(repository: ProductsRepository) {
-        for (p in productList) {
-            repository.addProductToCart(p)
-        }
-    }
-
     suspend fun emptyCart(repository: ProductsRepository) {
             removeAllCartProducts(repository)
             productList.clear()
