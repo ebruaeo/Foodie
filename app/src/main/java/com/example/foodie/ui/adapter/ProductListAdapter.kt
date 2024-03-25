@@ -48,11 +48,11 @@ class ProductListAdapter(var productList: List<Product>) :
             if (product.isFavorited) {
                 t.favButton.setImageResource(R.drawable.red_favorite_icon)
                 product.isFavorited = false
-                FavData.remove(product)
+                FavData.remove(product, it.context)
             } else {
                 t.favButton.setImageResource(R.drawable.ic_fav_filled)
                 product.isFavorited = true
-                FavData.save(product)
+                FavData.save(product, it.context)
             }
         }
 
