@@ -36,12 +36,26 @@ class ProductDetailFragment : Fragment() {
         val gelenProduct = bundle.product
 
         binding.productName.text = gelenProduct.product_name
-        binding.totalPrice.text = gelenProduct.product_price.toString()
         val url = "http://kasimadalan.pe.hu/yemekler/resimler/${gelenProduct.product_pic}"
         Glide.with(requireContext())
             .load(url)
             .into(binding.productPicture)
+
+        if (CartData.isProductAlreadyAdded(gelenProduct)) {
+            val addedProduct = CartData.getProduct(gelenProduct.product_id)!!
+            binding.totalPrice.text = getTotalPriceOf(addedProduct).toString()
+            binding.productCount.text = addedProduct.product_count.toString()
+            binding.btnSepeteEkle.text = "Sepeti güncelle"
+        } else {
+            binding.totalPrice.text = gelenProduct.product_price.toString()
+
+        }
+
         setOnClickListeners(gelenProduct)
+    }
+
+    private fun getTotalPriceOf(product: Product): Int {
+        return product.product_price * product.product_count
     }
 
     private fun setOnClickListeners(gelenProduct: Product) {

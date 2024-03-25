@@ -13,10 +13,12 @@ object CartData {
         return totalPrice
     }
 
+
+
     fun addProduct(product: Product) {
         if (isProductAlreadyAdded(product)) {
             val addedProduct = getProduct(product.product_id)!!
-            addedProduct.product_count += product.product_count
+            addedProduct.product_count = product.product_count
         } else {
             productList.add(product)
         }
@@ -24,7 +26,7 @@ object CartData {
 
     fun getProductList() = productList as List<Product>
 
-    private fun getProduct(productId: Int): Product? {
+    fun getProduct(productId: Int): Product? {
         for (p in productList) {
             if (p.product_id == productId)
                 return p
@@ -32,7 +34,7 @@ object CartData {
         return null
     }
 
-    private fun isProductAlreadyAdded(product: Product): Boolean {
+    fun isProductAlreadyAdded(product: Product): Boolean {
         for (p in productList) {
             if (p.product_id == product.product_id)
                 return true
