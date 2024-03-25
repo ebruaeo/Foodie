@@ -22,7 +22,7 @@ object CartData {
 
     fun addProduct(product: Product, count: Int, repository: ProductsRepository) {
         if (isProductAlreadyAdded(product.productName)) {
-            val addedProduct = getProduct(product.productId)!!
+            val addedProduct = getProduct(product.productName)!!
             addedProduct.productCount = count
         } else {
             productList.add(product.toCartProduct(count))
@@ -32,9 +32,9 @@ object CartData {
 
     fun getProductList() = productList as List<CartProduct>
 
-    fun getProduct(productId: Int): CartProduct? {
+    fun getProduct(productName: String): CartProduct? {
         for (p in productList) {
-            if (p.productId == productId)
+            if (p.productName == productName)
                 return p
         }
         return null
