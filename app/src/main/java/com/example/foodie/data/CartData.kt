@@ -57,6 +57,7 @@ object CartData {
 
     fun fetchCartProducts(repository: ProductsRepository) {
         CoroutineScope(Dispatchers.IO).launch {
+            productList.clear()
             productList.addAll(repository.fetchCartProducts())
         }
     }
