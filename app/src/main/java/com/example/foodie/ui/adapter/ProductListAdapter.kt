@@ -29,10 +29,10 @@ class ProductListAdapter(var productList: List<Product>) :
     }
 
     override fun onBindViewHolder(holder: DesigningProductHolder, position: Int) {
-        val product = productList.get(position)
+        val product = productList[position]
         val t = holder.designing
         t.productName.text = product.product_name
-        t.productPrice.text = "${product.product_price}"
+        t.productPrice.text = "${product.product_price}₺"
         if (product.isFavorited) {
             t.favButton.setImageResource(R.drawable.ic_fav_filled)
 
