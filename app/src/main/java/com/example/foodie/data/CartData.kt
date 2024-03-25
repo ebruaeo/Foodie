@@ -26,7 +26,7 @@ object CartData {
             addedProduct.productCount = count
         } else {
             CoroutineScope(Dispatchers.IO).launch {
-                repository.addProductToCart(product.toCartProduct())
+                repository.addProductToCart(product.toCartProduct(count))
                 fetchCartProducts(repository)
             }
         }
