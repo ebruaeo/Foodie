@@ -14,14 +14,15 @@ interface ProductApi {
     @GET("yemekler/tumYemekleriGetir.php")
     suspend fun getAllProducts(): AllProductsResponse
 
-    @GET("yemekler/sepettekiYemekleriGetir.php")
-    suspend fun fetchCartProducts(): CartProductsResponse
+    @POST("yemekler/sepettekiYemekleriGetir.php")
+    @FormUrlEncoded
+    suspend fun fetchCartProducts(@Field("kullanici_adi") username: String): CartProductsResponse
 
     @POST("yemekler/sepettenYemekSil.php")
     @FormUrlEncoded
     suspend fun removeProductFromCart(
         @Field("sepet_yemek_id") productId: Int,
-        @Field("kullanici_adi") username: String = ApiUtils.USERNAME
+        @Field("kullanici_adi") username: String
     ): RemoveProductResponse
 
     @POST("yemekler/sepeteYemekEkle.php")
@@ -31,7 +32,7 @@ interface ProductApi {
         @Field("yemek_resim_adi") productImgName: String,
         @Field("yemek_fiyat") productPrice: Int,
         @Field("yemek_siparis_adet") productCount: Int,
-        @Field("kullanici_adi") username: String = ApiUtils.USERNAME
+        @Field("kullanici_adi") username: String
     ): AddProductResponse
 
 }
