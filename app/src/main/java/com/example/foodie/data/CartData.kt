@@ -21,7 +21,7 @@ object CartData {
 
 
     fun addProduct(product: Product, count: Int, repository: ProductsRepository) {
-        if (isProductAlreadyAdded(product.productId)) {
+        if (isProductAlreadyAdded(product.productName)) {
             val addedProduct = getProduct(product.productId)!!
             addedProduct.productCount = count
         } else {
@@ -50,7 +50,9 @@ object CartData {
 
     fun removeProduct(product: CartProduct, repository: ProductsRepository) {
         productList.remove(product)
-        updateCart(repository)
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.removeProductFromCart(product.productId)
+        }
     }
 
     fun fetchCartProducts(repository: ProductsRepository) {
