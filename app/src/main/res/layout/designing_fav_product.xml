@@ -31,7 +31,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/productConstraint"
                 app:layout_constraintStart_toStartOf="@id/productConstraint"
                 app:layout_constraintTop_toTopOf="@id/productConstraint"
-                app:srcCompat="@drawable/ayran" />
+                tools:srcCompat="@drawable/ayran" />
 
             <TextView
                 android:id="@+id/productName"

@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.foodie.R
 import com.example.foodie.data.CartData
 import com.example.foodie.data.FavData
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.DesigningFavProductBinding
+import com.example.foodie.retrofit.ApiUtils
 import com.example.foodie.ui.fragments.FavoritesFragmentDirections
 import com.example.foodie.ui.viewmodel.FavoritesViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -38,6 +40,11 @@ class FavListAdapter(
 
         t.productName.text = favProduct.productName
         t.productPrice.text = "${favProduct.productPrice}"
+        val url = ApiUtils.constructImgUrl(favProduct.productImgName)
+        Glide.with(t.productImage.context)
+            .load(url)
+            .override(500, 500)
+            .into(t.productImage)
 
         t.favProductCardView.setOnClickListener {
             val action =
