@@ -29,6 +29,9 @@ object CartData {
 //    }
 
     fun getProductList() = productList as List<CartProduct>
+    fun setProductList(productList: List<CartProduct>) {
+        this.productList.addAll(productList)
+    }
 
     fun getProduct(productId: Int): CartProduct? {
         for (p in productList) {
