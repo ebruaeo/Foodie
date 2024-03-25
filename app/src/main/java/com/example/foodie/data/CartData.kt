@@ -25,7 +25,10 @@ object CartData {
             val addedProduct = getProduct(product.productName)!!
             addedProduct.productCount = count
         } else {
-            productList.add(product.toCartProduct(count))
+            CoroutineScope(Dispatchers.IO).launch {
+                repository.addProductToCart(product.toCartProduct())
+                fetchCartProducts(repository)
+            }
         }
         updateCart(repository)
     }
