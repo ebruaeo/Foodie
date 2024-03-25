@@ -3,9 +3,11 @@ package com.example.foodie.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.foodie.data.entity.CartProduct
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.DesigningCartProductsBinding
+import com.example.foodie.retrofit.ApiUtils
 import com.example.foodie.ui.viewmodel.CartViewModel
 import com.google.android.material.snackbar.Snackbar
 
@@ -34,6 +36,11 @@ class CartListAdapter(
         t.cartProductName.text = product.productName
         t.cartProductCount.text = product.productCount.toString()
         t.totalPrice.text = "${product.productCount * product.productPrice}₺"
+
+        val url = ApiUtils.constructImgUrl(product.productImgName)
+        Glide.with(t.cartProductPic.context)
+            .load(url)
+            .into(t.cartProductPic)
 
 
         t.btnDelete.setOnClickListener {
