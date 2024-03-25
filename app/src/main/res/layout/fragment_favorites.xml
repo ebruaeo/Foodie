@@ -20,6 +20,24 @@
         app:titleMarginStart="140dp"
         app:titleTextColor="@color/pageBackground" />
 
+    <TextView
+        android:id="@+id/noItemFoundText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Şu anda favoriye eklediğiniz bir ürün yok"
+        android:textAlignment="center"
+        android:textColor="#80013919"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        android:translationZ="10dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarFavorites"
+        tools:visibility="visible" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favRecyclerView"
         android:layout_width="0dp"
