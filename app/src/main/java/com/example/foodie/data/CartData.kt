@@ -2,8 +2,13 @@ package com.example.foodie.data
 
 import com.example.foodie.data.entity.CartProduct
 import com.example.foodie.data.entity.Product
+import com.example.foodie.data.repository.ProductsRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 object CartData {
+
     private val productList = mutableListOf<CartProduct>()
 
     fun getTotalPrice(): Int {
@@ -15,23 +20,17 @@ object CartData {
     }
 
 
-    fun addProduct(product: Product, count: Int) {
+    fun addProduct(product: Product, count: Int, repository: ProductsRepository) {
         if (isProductAlreadyAdded(product.productId)) {
             val addedProduct = getProduct(product.productId)!!
             addedProduct.productCount = count
         } else {
             productList.add(product.toCartProduct(count))
         }
+        updateCart(repository)
     }
-
-//    fun addProduct(cartProduct: CartProduct) {
-//
-//    }
 
     fun getProductList() = productList as List<CartProduct>
-    fun setProductList(productList: List<CartProduct>) {
-        this.productList.addAll(productList)
-    }
 
     fun getProduct(productId: Int): CartProduct? {
         for (p in productList) {
@@ -49,9 +48,39 @@ object CartData {
         return false
     }
 
-    fun removeProduct(product: CartProduct) {
+    fun removeProduct(product: CartProduct, repository: ProductsRepository) {
         productList.remove(product)
+        updateCart(repository)
     }
 
+    fun fetchCartProducts(repository: ProductsRepository) {
+        CoroutineScope(Dispatchers.IO).launch {
+            productList.addAll(repository.fetchCartProducts())
+        }
+    }
+
+    private fun updateCart(repository: ProductsRepository) {
+        CoroutineScope(Dispatchers.IO).launch {
+            removeAllCartProducts(repository)
+            addAllCartProducts(repository)
+        }
+    }
+
+    private suspend fun removeAllCartProducts(repository: ProductsRepository) {
+        for (p in productList) {
+            repository.removeProductFromCart(p.productId)
+        }
+    }
+
+    private suspend fun addAllCartProducts(repository: ProductsRepository) {
+        for (p in productList) {
+            repository.addProductToCart(p)
+        }
+    }
+
+    suspend fun emptyCart(repository: ProductsRepository) {
+            removeAllCartProducts(repository)
+            productList.clear()
+    }
 
 }
