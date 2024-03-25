@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import com.example.foodie.data.FavData
 import com.example.foodie.ui.adapter.FavListAdapter
 import com.example.foodie.data.entity.Product
 import com.example.foodie.databinding.FragmentFavoritesBinding
@@ -16,24 +17,22 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
 
+
     private lateinit var binding: FragmentFavoritesBinding
-    private lateinit var viewModel: FavoritesViewModel
+    private val viewModel: FavoritesViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentFavoritesBinding.inflate(inflater,container,false)
+        binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        val favProductList = listOf(
-            Product(0,"",50,"Ayran","200ml"),
-            Product(1,"",100,"Baklava","500gr"),
-            Product(2,"",150,"Köfte","1 kilo")
-        )
-
-        val favProductAdapter = FavListAdapter(favProductList)
-        binding.favRecyclerView.adapter = favProductAdapter
-
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
+        viewModel.fetchAllProducts()
+        viewModel.favoriteProductIds = FavData.getAll(requireContext())?.keys ?: setOf()
 
         binding.backButton.setOnClickListener {
             Navigation.findNavController(it).popBackStack()
@@ -45,11 +44,29 @@ class FavoritesFragment : Fragment() {
         }
 
 
-        return binding.root
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val tempViewModel: FavoritesViewModel by viewModels()
-        viewModel=tempViewModel
+
+    private fun observeViewModel() {
+        viewModel.productList.observe(viewLifecycleOwner) { productList ->
+            val adapterData = mutableListOf<Product>()
+            val favDataIds = FavData.getAll(requireContext())?.keys
+            for (p in productList) {
+                if (favDataIds?.contains(p.productId.toString()) == true) {
+                    adapterData.add(p)
+                }
+            }
+            switchNoItemFoundText(adapterData)
+            val favProductAdapter = FavListAdapter(adapterData, viewModel)
+            binding.favRecyclerView.adapter = favProductAdapter
+        }
     }
+
+    private fun switchNoItemFoundText(adapterData: MutableList<Product>) {
+        if (adapterData.isEmpty()) {
+            binding.noItemFoundText.visibility = View.VISIBLE
+        } else {
+            binding.noItemFoundText.visibility = View.GONE
+        }
+    }
+
 }
