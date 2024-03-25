@@ -44,7 +44,7 @@ class ProductDetailFragment : Fragment() {
             .into(binding.productPicture)
 
         if (CartData.isProductAlreadyAdded(gelenProduct.productName)) {
-            val addedProduct = CartData.getProduct(gelenProduct.productId)!!
+            val addedProduct = CartData.getProduct(gelenProduct.productName)!!
             binding.totalPrice.text = getTotalPriceOf(addedProduct).toString()
             binding.productCount.text = addedProduct.productCount.toString()
             binding.btnSepeteEkle.text = "Sepeti güncelle"
