@@ -2,6 +2,7 @@ package com.example.foodie.data
 
 import com.example.foodie.data.entity.CartProduct
 import com.example.foodie.data.entity.Product
+import com.example.foodie.data.entity.RemoveProductResponse
 import com.example.foodie.data.repository.ProductsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -56,9 +57,9 @@ object CartData {
         return false
     }
 
-    suspend fun removeProduct(product: CartProduct, repository: ProductsRepository) {
+    suspend fun removeProduct(product: CartProduct, repository: ProductsRepository): RemoveProductResponse {
             productList.remove(product)
-            repository.removeProductFromCart(product.productId)
+            return repository.removeProductFromCart(product.productId)
     }
 
     fun fetchCartProducts(repository: ProductsRepository) {

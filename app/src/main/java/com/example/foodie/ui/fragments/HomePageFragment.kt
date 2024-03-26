@@ -9,11 +9,14 @@ import android.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.foodie.R
+import com.example.foodie.data.CartData
 import com.example.foodie.data.FavData
 import com.example.foodie.ui.adapter.ProductListAdapter
 import com.example.foodie.databinding.FragmentHomePageBinding
 import com.example.foodie.ui.viewmodel.HomePageViewModel
 import com.example.foodie.utils.gecis
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,6 +39,8 @@ class HomePageFragment : Fragment() {
             val productAdapter = ProductListAdapter(it)
             binding.progressBar.visibility = View.GONE
             binding.productRecyclerView.adapter = productAdapter
+//            addBadgeToFab(CartData.getProductList().size)
+
         }
 
         binding.progressBar.visibility = View.VISIBLE
@@ -66,10 +71,22 @@ class HomePageFragment : Fragment() {
 
     }
 
+    @androidx.annotation.OptIn(com.google.android.material.badge.ExperimentalBadgeUtils::class)
+    private fun addBadgeToFab(count: Int) {
+        if (count != 0) {
+            val badgeDrawable = BadgeDrawable.create(requireContext())
+            badgeDrawable.number = count
+            badgeDrawable.horizontalOffset = 30
+            badgeDrawable.verticalOffset = 20
+            BadgeUtils.attachBadgeDrawable(badgeDrawable, binding.fabCart)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val tempViewModel: HomePageViewModel by viewModels()
         viewModel = tempViewModel
     }
+
 
 }
