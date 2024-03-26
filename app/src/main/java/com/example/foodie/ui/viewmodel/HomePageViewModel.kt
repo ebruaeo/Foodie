@@ -34,7 +34,7 @@ class HomePageViewModel @Inject constructor(var productRepo: ProductsRepository)
 
     }
 
-    fun productYukle() {
+    fun fetchAllProducts() {
         viewModelScope.launch {
             productList.value = productRepo.getAllProducts()
         }

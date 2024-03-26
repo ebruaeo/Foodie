@@ -39,7 +39,7 @@ class HomePageFragment : Fragment() {
         }
 
         binding.progressBar.visibility = View.VISIBLE
-        viewModel.productYukle()
+        viewModel.fetchAllProducts()
 
 
         binding.fabCart.setOnClickListener {
