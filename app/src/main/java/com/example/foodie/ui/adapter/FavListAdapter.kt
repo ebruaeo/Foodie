@@ -53,8 +53,12 @@ class FavListAdapter(
         }
 
         t.btnSepeteEkle.setOnClickListener {
-            viewModel.addToCart(favProduct)
-            Snackbar.make(it, "Ürün sepete eklendi.", Snackbar.LENGTH_SHORT).show()
+            if (CartData.isProductAlreadyAdded(favProduct.productName)) {
+                Snackbar.make(it, "Ürün sepette bulunuyor.", Snackbar.LENGTH_SHORT).show()
+            } else {
+                viewModel.addToCart(favProduct)
+                Snackbar.make(it, "Ürün sepete eklendi.", Snackbar.LENGTH_SHORT).show()
+            }
         }
 
         t.favButton.setOnClickListener {
