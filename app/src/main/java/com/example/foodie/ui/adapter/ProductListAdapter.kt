@@ -57,9 +57,14 @@ class ProductListAdapter(var productList: List<Product>) :
         }
 
         t.productCardView.setOnClickListener {
-            val gecis =
-                HomePageFragmentDirections.actionHomePageFragmentToProductDetailFragment(product = product)
-            Navigation.gecis(it, gecis)
+            try {
+                val gecis =
+                    HomePageFragmentDirections.actionHomePageFragmentToProductDetailFragment(product = product)
+                Navigation.gecis(it, gecis)
+            } catch (e: Exception) {
+
+            }
+
         }
 
     }
