@@ -25,6 +25,7 @@ class ProductDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentProductDetailBinding
     private val viewModel: ProductDetailViewModel by viewModels()
+    val bundle: ProductDetailFragmentArgs by navArgs()
     private var snackbar: Snackbar? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,23 +37,34 @@ class ProductDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bundle: ProductDetailFragmentArgs by navArgs()
+        observeViewModel()
         val gelenProduct = bundle.product
 
         binding.productName.text = gelenProduct.productName
         setFavBtnBackground(gelenProduct)
         setProductImage(gelenProduct)
-        prepareScreen(gelenProduct)
         setOnClickListeners(gelenProduct)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        prepareScreen(bundle.product)
+    }
+
+    private fun observeViewModel() {
+        viewModel.screenState.observe(viewLifecycleOwner) {
+            binding.btnSepeteEkle.text = it.btnText
+        }
     }
 
     private fun prepareScreen(gelenProduct: Product) {
         if (CartData.isProductAlreadyAdded(gelenProduct.productName)) {
+            viewModel.screenStateToUpdate()
             val addedProduct = CartData.getProduct(gelenProduct.productName)!!
             binding.totalPrice.text = getTotalPriceOf(addedProduct).toString()
             binding.productCount.text = addedProduct.productCount.toString()
-            binding.btnSepeteEkle.text = "Sepeti güncelle"
         } else {
+            viewModel.screenStateToAdd()
             binding.totalPrice.text = gelenProduct.productPrice.toString()
         }
     }
@@ -130,13 +142,14 @@ class ProductDetailFragment : Fragment() {
         binding.btnSepeteEkle.setOnClickListener {
             val productCount = binding.productCount.text.toString().toInt()
             viewModel.addToCart(gelenProduct, productCount)
-            snackbar = Snackbar.make(it, "Ürün sepete eklendi.", Snackbar.LENGTH_SHORT)
+            snackbar = Snackbar.make(it, viewModel.screenState.value!!.snackbarText, Snackbar.LENGTH_SHORT)
                 .setAction("Sepete git") {
                     val action =
                         ProductDetailFragmentDirections.actionProductDetailFragmentToCartFragment()
                     Navigation.findNavController(binding.btnSepeteEkle).navigate(action)
                 }
             snackbar?.show()
+            viewModel.screenStateToUpdate()
         }
     }
 
