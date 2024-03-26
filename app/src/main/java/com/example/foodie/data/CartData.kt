@@ -56,11 +56,9 @@ object CartData {
         return false
     }
 
-    fun removeProduct(product: CartProduct, repository: ProductsRepository) {
-        productList.remove(product)
-        CoroutineScope(Dispatchers.IO).launch {
+    suspend fun removeProduct(product: CartProduct, repository: ProductsRepository) {
+            productList.remove(product)
             repository.removeProductFromCart(product.productId)
-        }
     }
 
     fun fetchCartProducts(repository: ProductsRepository) {

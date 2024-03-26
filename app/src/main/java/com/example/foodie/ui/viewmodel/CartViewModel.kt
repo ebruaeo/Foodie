@@ -19,8 +19,10 @@ class CartViewModel @Inject constructor(var productRepo: ProductsRepository) : V
     var productList = MutableLiveData<List<CartProduct>>()
 
     fun removeProduct(product: CartProduct) {
-        CartData.removeProduct(product, productRepo)
-        productList.value = CartData.getProductList()
+        viewModelScope.launch {
+            CartData.removeProduct(product, productRepo)
+            productList.value = CartData.getProductList()
+        }
     }
 
     fun emptyCart() {
