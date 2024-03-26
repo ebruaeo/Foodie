@@ -39,7 +39,7 @@ class FavListAdapter(
         val t = holder.designing
 
         t.productName.text = favProduct.productName
-        t.productPrice.text = "${favProduct.productPrice}"
+        t.productPrice.text = "${favProduct.productPrice}₺"
         val url = ApiUtils.constructImgUrl(favProduct.productImgName)
         Glide.with(t.productImage.context)
             .load(url)
